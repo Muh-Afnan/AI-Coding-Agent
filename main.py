@@ -43,25 +43,29 @@ def main():
 
     config=types.GenerateContentConfig(tools=[available_functions],system_instruction=system_prompt)
 
-    response = client.models.generate_content(
-        model=model,
-        contents=messages,
-        config=config
-    )
+    max_iters = 20
+    for i in range(max_iters):
+        response = client.models.generate_content(
+            model=model,
+            contents=messages,
+            config=config
+        )
+        if response is None or response.usage_metadata is None:
+            print("response is invalid")
+            return
+        if verbose_flag:
+            print(f"User prompt: {prompt}")
+            print(f"Prompt tokens: {response.usage_metadata.prompt_token_count}")
+            print(f"Response tokens: {response.usage_metadata.candidates_token_count}")
 
-    if response.function_calls:
-        for function_call_part in response.function_calls:
-            result = call_function(function_call_part)
-    else:
-        print(response.text)
+        if response.function_calls:
+            for function_call_part in response.function_calls:
+                result = call_function(function_call_part, verbose_flag)
+                messages.append(types.Content(role="",parts=[types.Part(text=prompt)]),)
+        else:
+            print(response.text)
+            return
 
-    if response is None or response.usage_metadata is None:
-        print("response is invalid")
-        return
-    if verbose_flag:
-        print(f"User prompt: {prompt}")
-        print(f"Prompt tokens: {response.usage_metadata.prompt_token_count}")
-        print(f"Response tokens: {response.usage_metadata.candidates_token_count}")
 
 if __name__ == "__main__":
     main()

@@ -15,7 +15,7 @@ def call_function(function_call_part, verbose=False):
     results = ""
     if function_call_part.name == "get_files_info":
         results = get_files_info(working_directory,**function_call_part.args)
-    if function_call_part.name == "get_file_content":
+    if function_call_part.name == "get_files_content":
         results = get_file_content(working_directory,**function_call_part.args)
     if function_call_part.name == "write_file":
         results = write_file(working_directory,**function_call_part.args)
