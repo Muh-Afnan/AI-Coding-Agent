@@ -1,0 +1,18 @@
+🔧 Immediate Action Items
+High Priority:
+
+Fix JSON parsing in Coder (use my improved version)
+Add error logging framework (use logging module)
+Implement backup system in FileManager
+Add token counting (don't rely on character limits)
+Create tests for core modules
+
+Medium Priority:
+6. Build tool registry system
+7. Add vector search for large projects
+8. Implement proper state persistence (SQLite?)
+9. Add cost tracking and limits
+Low Priority:
+10. Multi-agent coordination
+11. Web interface
+12. Plugin system for custom tools
